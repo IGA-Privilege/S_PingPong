@@ -24,21 +24,15 @@ public class O_BouncingBall : MonoBehaviour
     public float forceEnhancement;
     public float velocityLocker;
 
-    public Action SelectCharacter;
-    public Action DeselectCharacter;
     public CinemachineVirtualCamera cam_Player;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         mIUE = M_InputUnityEvent.Instance;
-        mIUE.ScreenPressStarted += PlayerDetectionOnStart;
-        mIUE.ScreenPressCanceled += PlayerDetectionOnEnd;
         //mIUE.ScreenClickCanceled += ShootBall;
         mIUE.BallDragging += DrawShootTrajectory;
         mIUE.BallDragEnded += ShootBall;
-        
-        StateChangeActionLoad();
     }
 
     private void Update()
@@ -97,27 +91,25 @@ public class O_BouncingBall : MonoBehaviour
         }
     }
 
-    private void PlayerDetectionOnStart()
+    public void SelectCharacter()
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(mIUE.touchPos);
         if (currentState == BouncingBallState.Deselected)
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, layer_Player)) SelectCharacter();
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, layer_Player)) {
+                currentState = BouncingBallState.Selected;
+                DOTween.To(() => cam_Player.m_Lens.OrthographicSize, x => cam_Player.m_Lens.OrthographicSize = x, 10, 1);
+            } 
     }
 
-    private void PlayerDetectionOnEnd()
+    public void DeselectCharacter()
     {
+        currentState = BouncingBallState.OnTransition;
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(mIUE.touchPos);
         if (currentState == BouncingBallState.Selected)
-            if (!Physics.Raycast(ray, out hit, Mathf.Infinity, layer_Player)) DeselectCharacter();
-    }
-
-    private void StateChangeActionLoad()
-    {
-        SelectCharacter += () => currentState = BouncingBallState.Selected;
-        SelectCharacter += () => DOTween.To(() => cam_Player.m_Lens.OrthographicSize, x => cam_Player.m_Lens.OrthographicSize = x, 10, 1);
-        DeselectCharacter += () => currentState = BouncingBallState.OnTransition;
-        DeselectCharacter += () => DOTween.To(() => cam_Player.m_Lens.OrthographicSize, x => cam_Player.m_Lens.OrthographicSize = x, 20, 1).OnComplete(() => { currentState = BouncingBallState.Deselected; });
+            if (!Physics.Raycast(ray, out hit, Mathf.Infinity, layer_Player)) 
+                DOTween.To(() => cam_Player.m_Lens.OrthographicSize, x => cam_Player.m_Lens.OrthographicSize = x, 20, 1).
+                    OnComplete(() => { currentState = BouncingBallState.Deselected; });
     }
 }

@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
+using Cinemachine;
 
 public class M_InputUnityEvent : MonoBehaviour
 {
     private static M_InputUnityEvent instance;
     public static M_InputUnityEvent Instance { get { return instance; } }
 
+    public O_BouncingBall ball;
+    public M_Camera camera;
+
     public bool isRotating;
     public Vector3 touchDelta;
     public Vector3 touchPos;
-    public Vector3 previousPos;
+    public Vector3 dragStartPosition;
 
     public Action ScreenPressStarted;
     public Action ScreenPressCanceled;
@@ -33,20 +37,27 @@ public class M_InputUnityEvent : MonoBehaviour
     public void OnTouchPosition(InputAction.CallbackContext context)
     {
         BallDragging();
+        if (context.started) dragStartPosition = context.ReadValue<Vector2>();
         touchPos = context.ReadValue<Vector2>();
     }
 
     public void OnTouchPress(InputAction.CallbackContext context)
     {
-        ScreenPressStarted();
-        //if (context.started) ScreenPressStarted();
-        if (context.canceled) {
-            if (O_BouncingBall.GetState == BouncingBallState.OnDragging) BallDragEnded();
-            else ScreenPressCanceled();
-
+        if (context.started) ball.SelectCharacter();
+        else if (context.canceled)
+        {
+            if (O_BouncingBall.GetState == BouncingBallState.Selected && Vector2.Distance(dragStartPosition, context.ReadValue<Vector2>()) < 10f)
+            {
+                ball.DeselectCharacter();
+            }
+            else
+            {
+                camera.SnapRotation();
+                BallDragEnded();
+            }
             touchPos = Vector3.zero;
+            dragStartPosition = Vector3.zero;
         }
-
     }
 
     public void OnTouchDelta(InputAction.CallbackContext context)

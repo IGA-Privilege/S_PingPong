@@ -10,7 +10,6 @@ public class M_Camera : MonoBehaviour
     public enum CamType { Free, TargetFollow, Locked }
     public CamType currentType;
     private M_InputUnityEvent mIUE;
-    private M_InputAction mIA;
     [SerializeField] private float moveSpeed = 10;
     [SerializeField] private float rotateSpeed = 0.5f;
     private float xRotation;
@@ -26,7 +25,6 @@ public class M_Camera : MonoBehaviour
         o_BBall = target.GetComponent<O_BouncingBall>();
         mIUE = M_InputUnityEvent.Instance;
         xRotation = transform.rotation.eulerAngles.x;
-        mIUE.ScreenPressCanceled += SnapRotation;
         CameraTargetPosOffsetAchieve();
     }
 
