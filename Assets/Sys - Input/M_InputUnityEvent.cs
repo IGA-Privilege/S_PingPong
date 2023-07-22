@@ -43,21 +43,23 @@ public class M_InputUnityEvent : MonoBehaviour
 
     public void OnTouchPress(InputAction.CallbackContext context)
     {
-        if (context.started) ball.SelectCharacter();
-        else if (context.canceled)
-        {
-            if (O_BouncingBall.GetState == BouncingBallState.Selected && Vector2.Distance(dragStartPosition, context.ReadValue<Vector2>()) < 10f)
-            {
-                ball.DeselectCharacter();
-            }
-            else
-            {
-                camera.SnapRotation();
-                BallDragEnded();
-            }
-            touchPos = Vector3.zero;
-            dragStartPosition = Vector3.zero;
-        }
+
+
+        //if (context.canceled) ball.SelectCharacter();
+        //else if (context.canceled)
+        //{
+        //    if (O_BouncingBall.GetState == BouncingBallState.Selected && Vector2.Distance(dragStartPosition, context.ReadValue<Vector2>()) < 10f)
+        //    {
+        //        ball.DeselectCharacter();
+        //    }
+        //    else
+        //    {
+        //        camera.SnapRotation();
+        //        BallDragEnded();
+        //    }
+        //    touchPos = Vector3.zero;
+        //    dragStartPosition = Vector3.zero;
+        //}
     }
 
     public void OnTouchDelta(InputAction.CallbackContext context)
