@@ -36,7 +36,7 @@ public class M_InputAction : MonoBehaviour
 
         playerInput = GetComponent<PlayerInput>();
         //touchPressAction = playerInput.actions.FindAction("TouchPress");
-        touchPressAction = playerInput.actions["TouchPress"];
+        //touchPressAction = playerInput.actions["TouchPress"];
         touchPositionAction = playerInput.actions["TouchPosition"];
         touchDeltaAction = playerInput.actions["TouchDelta"];
         //touchDragAction = playerInput.actions["TouchDrag"];

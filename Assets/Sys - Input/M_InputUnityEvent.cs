@@ -4,15 +4,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
 using Cinemachine;
+using DG.Tweening;
 
 public class M_InputUnityEvent : MonoBehaviour
 {
-    private static M_InputUnityEvent instance;
-    public static M_InputUnityEvent Instance { get { return instance; } }
-
-    public O_BouncingBall ball;
-    public M_Camera camera;
-
     public bool isRotating;
     public Vector3 touchDelta;
     public Vector3 touchPos;
@@ -23,11 +18,7 @@ public class M_InputUnityEvent : MonoBehaviour
     public Action BallDragging;
     public Action BallDragEnded;
 
-    private void Awake()
-    {
-        if (instance != null && instance != this) Destroy(gameObject);
-        else { instance = this; DontDestroyOnLoad(gameObject); }
-    }
+    public CinemachineVirtualCamera cam_Player;
 
     private void Start()
     {
@@ -37,36 +28,24 @@ public class M_InputUnityEvent : MonoBehaviour
     public void OnTouchPosition(InputAction.CallbackContext context)
     {
         BallDragging();
-        if (context.started) dragStartPosition = context.ReadValue<Vector2>();
+        if (context.started)
+        {
+            DOTween.To(() => cam_Player.m_Lens.OrthographicSize, x => cam_Player.m_Lens.OrthographicSize = x, 10, 1);
+            dragStartPosition = context.ReadValue<Vector2>();
+        }
         touchPos = context.ReadValue<Vector2>();
+        if (context.canceled)
+        {
+            BallDragEnded();
+            DOTween.To(() => cam_Player.m_Lens.OrthographicSize, x => cam_Player.m_Lens.OrthographicSize = x, 20, 1);
+        }
     }
 
-    public void OnTouchPress(InputAction.CallbackContext context)
-    {
+    //public void OnTouchDelta(InputAction.CallbackContext context)
+    //{
+    //    if (O_BouncingBall.GetState == BouncingBallState.Deselected)
+    //        isRotating = context.started || context.performed;
 
-
-        //if (context.canceled) ball.SelectCharacter();
-        //else if (context.canceled)
-        //{
-        //    if (O_BouncingBall.GetState == BouncingBallState.Selected && Vector2.Distance(dragStartPosition, context.ReadValue<Vector2>()) < 10f)
-        //    {
-        //        ball.DeselectCharacter();
-        //    }
-        //    else
-        //    {
-        //        camera.SnapRotation();
-        //        BallDragEnded();
-        //    }
-        //    touchPos = Vector3.zero;
-        //    dragStartPosition = Vector3.zero;
-        //}
-    }
-
-    public void OnTouchDelta(InputAction.CallbackContext context)
-    {
-        if (O_BouncingBall.GetState == BouncingBallState.Deselected)
-            isRotating = context.started || context.performed;
-
-        touchDelta = context.ReadValue<Vector2>();
-    }
+    //    touchDelta = context.ReadValue<Vector2>();
+    //}
 }

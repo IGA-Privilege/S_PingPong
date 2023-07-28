@@ -15,15 +15,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "TouchPress",
-                    "type": "Button",
-                    "id": "7e58e0e4-46e9-4a12-a58c-ccddaeafa4d9",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "MultiTap",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "TouchDelta",
                     "type": "Value",
                     "id": "01231dd0-1880-4f1b-b002-b2accf5c289b",
@@ -42,50 +33,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "TouchPosition",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "dd79ab0e-98ab-4203-8c5a-3c0f312926fd",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "TouchPosition",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "5fff958e-eba3-4006-8958-00d69db67703",
-                    "path": "<Touchscreen>/Press",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "TouchPress",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8287d385-2970-4edb-9304-7f9a00bc3ac3",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "TouchPress",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "39340213-abc2-4867-98ba-04076952734c",
-                    "path": "<Mouse>/delta",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "TouchDelta",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
