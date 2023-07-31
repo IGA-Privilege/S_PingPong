@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class O_BouncingBall : MonoBehaviour
 {
@@ -9,10 +10,15 @@ public class O_BouncingBall : MonoBehaviour
     public LayerMask layer_Ground;
     public float forceEnhancement;
     public float velocityLocker;
+    protected bool isOnFly = false;
+    public Action FlyEndAction;
+    protected bool isGrounded = false;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        FlyEndAction += () => isOnFly = false;
+        //FlyEndAction += () => rb.velocity = Vector3.zero;
     }
 
     void Update()
@@ -22,9 +28,18 @@ public class O_BouncingBall : MonoBehaviour
 
     public void VelocityController()
     {
-        bool isGrounded = false;
-        if (Physics.Raycast(transform.position,Vector3.down, 0.6f, layer_Ground)) isGrounded = true;
-        if (rb.velocity.magnitude < velocityLocker && isGrounded) rb.velocity = Vector3.zero;
+        if (Physics.Raycast(transform.position, Vector3.down, 0.6f, layer_Ground)) isGrounded = true;
+        else isGrounded = false;
+        if (rb.velocity.magnitude < velocityLocker && isGrounded) 
+        {
+            if (isOnFly) FlyEndAction();
+            rb.velocity = Vector3.zero;
+        }
+   
+        //{
+        //    isOnFly = false;
+        //    rb.velocity = Vector3.zero;
+        //}
     }
 
     //public void SelectCharacter()

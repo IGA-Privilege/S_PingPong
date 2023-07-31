@@ -2,53 +2,50 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class M_Environment : MonoBehaviour
+public class M_Environment : Singleton<M_Environment>
 {
     public Material mat_Normal;
-    public Material mat_Transparent;
     private bool isTrans = false;
-    public Transform wallParent;
+    private bool isPreviousPressed = false;
 
     void Start()
     {
-        
+        ChangeMaterial_ToNormal();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        PressStateChanged();
     }
 
     public void ChangeMaterial_ToNormal()
     {
-        if (isTrans)
-        {
-            for (int i = 0; i < wallParent.childCount; i++)
-                wallParent.GetChild(i).GetComponent<MeshRenderer>().material = mat_Transparent;
-            isTrans = true;
-        }
-        else
-        {
-            for (int i = 0; i < wallParent.childCount; i++)
-                wallParent.GetChild(i).GetComponent<MeshRenderer>().material = mat_Normal;
-            isTrans = false;
-        }
+        Debug.Log("To Normal");
+        mat_Normal.SetColor("_BaseColor", new Color(1, 1, 1, 1));
+
     }
 
     public void ChangeMaterial_ToTrans()
     {
-        if (isTrans)
+        Debug.Log("To Trans");
+        mat_Normal.SetColor("_BaseColor", new Color(1, 1, 1, 0.1f));
+    }
+
+    public void PressStateChanged()
+    {
+        if (O_BallInput.Instance.isPressed != isPreviousPressed)
         {
-            for (int i = 0; i < wallParent.childCount; i++)
-                wallParent.GetChild(i).GetComponent<MeshRenderer>().material = mat_Transparent;
-            isTrans = true;
-        }
-        else
-        {
-            for (int i = 0; i < wallParent.childCount; i++)
-                wallParent.GetChild(i).GetComponent<MeshRenderer>().material = mat_Normal;
-            isTrans = false;
+            if (O_BallInput.Instance.isPressed)
+            {
+                ChangeMaterial_ToTrans();
+                isPreviousPressed = true;
+            }
+            else
+            {
+                //ChangeMaterial_ToNormal();
+                isPreviousPressed = false;
+            }
         }
     }
 }

@@ -21,7 +21,7 @@ MonoBehaviour:
   colorArray_3D:
   - color: {r: 0, g: 0, b: 0, a: 1}
     colorObjs:
-    - model: {fileID: 8806842950677006214, guid: c58f9f95e33e2d34aadd23720f6362d7, type: 3}
+    - model: {fileID: 7738047081631766723, guid: 05920f1d63a17224f832745c2d74e4ce, type: 3}
       proportion: 0
   - color: {r: 1, g: 1, b: 1, a: 1}
     colorObjs: []

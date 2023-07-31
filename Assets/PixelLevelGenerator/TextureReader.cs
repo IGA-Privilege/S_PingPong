@@ -106,7 +106,7 @@ public class TextureReader : MonoBehaviour
                     Vector3 pos = new Vector3(x*ratio, y, z*ratio);
                     int randomYDegree = Random.Range(0, 360);
                     //randomYDegree = (randomYDegree < 90) ? 0 : (randomYDegree < 180) ? 90 : (randomYDegree < 270) ? 180 : (randomYDegree < 360) ? 270 : 360;
-                    GameObject go = Instantiate(GetTileModel(colorObj.colorObjs), pos, Quaternion.Euler(-90, 0, 0));
+                    GameObject go = Instantiate(GetTileModel(colorObj.colorObjs), pos, Quaternion.identity);
                      //new GameObject($"Tile{x}{z}");
                     return go.transform;
                 }

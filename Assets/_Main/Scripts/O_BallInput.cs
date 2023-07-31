@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
 
-public class O_BallInput : MonoBehaviour
+public class O_BallInput : Singleton<O_BallInput>
 {
     [SerializeField] private InputAction press, touchPos;
     private Vector3 curScreenPos;
@@ -17,6 +17,9 @@ public class O_BallInput : MonoBehaviour
 
     private Vector3 pos_Start;
     private Vector3 pos_End;
+
+    public bool isPressed = false;
+    public Transform realBall;
 
     //private bool isClickedOn
     //{
@@ -48,10 +51,17 @@ public class O_BallInput : MonoBehaviour
         curCamera = Camera.main;
         press.Enable();
         touchPos.Enable();
+    }
+
+    private void Start()
+    {
+        realBall = FindObjectOfType<O_RealBall>().transform;
         touchPos.started += context => { pos_Start = context.ReadValue<Vector2>(); };
         touchPos.performed += context => { curScreenPos = context.ReadValue<Vector2>(); };
+        press.started += _ => isPressed = true;
         press.performed += _ => { StartCoroutine(Drag()); };
         press.canceled += _ => { isDragging = false; };
+        press.canceled += _ => isPressed = false;
         touchPos.canceled += context => { pos_End = context.ReadValue<Vector2>(); };
     }
 
