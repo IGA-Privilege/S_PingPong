@@ -15,7 +15,7 @@ MonoBehaviour:
   is2DLevel: 0
   colorPalette: {fileID: 2800000, guid: 2eda35e25f94a3d4eb2e2a21e4b32313, type: 3}
   maps:
-  - map: {fileID: 2800000, guid: 65ff6b1d0eb32af4eb5fb2618c93c338, type: 3}
+  - map: {fileID: 2800000, guid: 8b9e359722625e64ca29c6ad745af4f2, type: 3}
     layerName: Default
   colorArray_2D: []
   colorArray_3D:

@@ -51,6 +51,28 @@ public class M_Camera : MonoBehaviour
     {
         targetPosOffset = transform.position - target.position;
     }
+
+    //public void SnapRotation()
+    //{
+    //    isCamRotationSnap = true;
+    //    transform.DORotate(SnappedVector(), 0.5f).SetEase(Ease.OutBounce).OnComplete(
+    //        () => { isCamRotationSnap = false; CameraTargetPosOffsetAchieve(); });
+
+    //    Vector3 SnappedVector()
+    //    {
+    //        float endValue = 0.0f;
+    //        float currentY = Mathf.Ceil(transform.rotation.eulerAngles.y);
+
+    //        endValue = currentY switch
+    //        {
+    //            >= 0 and <= 90 => 45f,
+    //            >= 91 and <= 180 => 135f,
+    //            >= 181 and <= 270 => 225f,
+    //            _ => 315f,
+    //        };
+    //        return new Vector3(xRotation, endValue, 0);
+    //    }
+    //}
 }
 
 //    void CameraRotating()
@@ -63,24 +85,5 @@ public class M_Camera : MonoBehaviour
 //        }
 //    }
 
-//    public void SnapRotation()
-//    {
-//        isCamRotationSnap = true;
-//        transform.DORotate(SnappedVector(), 0.5f).SetEase(Ease.OutBounce).OnComplete(() => { isCamRotationSnap = false; CameraTargetPosOffsetAchieve(); });
 
-//        Vector3 SnappedVector()
-//        {
-//            float endValue = 0.0f;
-//            float currentY = Mathf.Ceil(transform.rotation.eulerAngles.y);
-
-//            endValue = currentY switch
-//            {
-//                >= 0 and <= 90 => 45f,
-//                >= 91 and <= 180 => 135f,
-//                >= 181 and <= 270 => 225f,
-//                _ => 315f,
-//            };
-//            return new Vector3(xRotation, endValue, 0);
-//        }
-//    }
 //}
